@@ -14,20 +14,22 @@
 (function() {
     'use strict';
 
-    var waitTime = 10; // in seconds
+    const waitTime = 10; // in seconds
+
+    var $js = document.querySelectorAll.bind(document);
 
     var autoUpvote = () => {
         // if there is atleast one answer
-        if ($("#answers") && $("#answers .answer").length === 0) { return; }
+        if ($js("#answers") && $js("#answers .answer").length === 0) { return; }
 
         // If the user stays more than 20 sec upvote question and answer
         setTimeout(() => {
-            if ($(".question .votecell") && $(".question .votecell").length > 0) {
-                $(".question .votecell").eq(0).find("a.vote-up-off").click();
+            if ($js(".question .votecell") && $js(".question .votecell").length > 0) {
+                $js(".question .votecell")[0].querySelector("a.vote-up-off").click();
             }
 
-            if ($("#answers .answer") && $("#answers .answer").length > 0) {
-                $("#answers .answer").eq(0).find(".votecell a.vote-up-off").click();
+            if ($js("#answers .answer") && $js("#answers .answer").length > 0) {
+                $js("#answers .answer")[0].querySelector(".votecell a.vote-up-off").click();
             }
         }, waitTime*1000);
     };
@@ -47,7 +49,7 @@
         console.log("[SO Auto Upvoter] Stack Overflow Identified");
         document.querySelector('.js-inbox-button').addEventListener("click", () => {
             var commentSectionWaitingInterval = setInterval(() => {
-                var commentLinks = document.querySelectorAll('.inbox-dialog .modal-content .js-gps-track');
+                var commentLinks = $js('.inbox-dialog .modal-content .js-gps-track');
                 if (commentLinks.length > 0) {
                     clearInterval(commentSectionWaitingInterval);
                     commentLinks.forEach(thisComment => {
@@ -64,9 +66,9 @@
 
     if (location.host + location.pathname + location.search === "stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox") {
         console.log("[SO Auto Upvoter] Stack Exchange Profile page identified");
-        $(".topbar-icon.icon-inbox").click();
+        $js(".topbar-icon.icon-inbox")[0].click();
         let commentSectionWaitingInterval = setInterval(() => {
-            var commentLinks = document.querySelectorAll('.inbox-dialog .modal-content .js-gps-track');
+            var commentLinks = $js('.inbox-dialog .modal-content .js-gps-track');
             if (commentLinks.length > 0) {
                 clearInterval(commentSectionWaitingInterval);
                 GM_setValue("isCommentClicked", "true");
@@ -107,7 +109,7 @@
     }
 
     if (location.host + location.pathname === "stackoverflow.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]") {
-        document.querySelectorAll("a.answer-hyperlink, a.question-hyperlink").forEach(
+        $js("a.answer-hyperlink, a.question-hyperlink").forEach(
             thisLinkEl => thisLinkEl.href = `${thisLinkEl.pathname}${thisLinkEl.search ? "&" : "?"}isUserAnsweringQuestions=true${thisLinkEl.hash}`
         );
     }
