@@ -3,7 +3,7 @@
 // @namespace    http://stackoverflow.com/
 // @version      0.1
 // @description  Intelligent Auto Upvoter for Stack Overflow
-// @author       You
+// @author       SGS Venkatesh
 // @match        *://stackoverflow.com/*
 // @match        *://stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox
 // @grant        GM_setValue
@@ -65,8 +65,14 @@
     if (location.host + location.pathname + location.search === "stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox") {
         console.log("[SO Auto Upvoter] Stack Exchange Profile page identified");
         $(".topbar-icon.icon-inbox").click();
-        GM_setValue("isCommentClicked", "true");
-        window.location.href = $(".history-table tr").eq(0).find("td").eq(3).find("a")[0].href;
+        let commentSectionWaitingInterval = setInterval(() => {
+            var commentLinks = document.querySelectorAll('.inbox-dialog .modal-content .js-gps-track');
+            if (commentLinks.length > 0) {
+                clearInterval(commentSectionWaitingInterval);
+                GM_setValue("isCommentClicked", "true");
+                window.location.href = commentLinks[0].href;
+            }
+        }, 100);
     }
 
     if (/stackoverflow.com\/questions\/[0-9]+\/.*/.test(location.host + location.pathname)) {
