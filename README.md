@@ -8,7 +8,7 @@ It is assumed that the user wouldn't want to upvote questions if he is answering
 
 In any case, the user can revert his action within 60 seconds.
 
-Can we used along with [Desktop Notifications for Stack Exchange](https://chrome.google.com/webstore/detail/desktop-notifications-for/ijglncoabcgieiokjmgdogpefdblmnle) to view your inbox notifications easily. 
+This can be used along with [Desktop Notifications for Stack Exchange](https://chrome.google.com/webstore/detail/desktop-notifications-for/ijglncoabcgieiokjmgdogpefdblmnle) to view your inbox notifications easily. 
 
 **How to install:**
 
