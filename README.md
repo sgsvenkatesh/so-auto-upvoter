@@ -1,6 +1,6 @@
 # so-auto-upvoter
 
-This script is to used with [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) to auto upvote question and the first answer if the user stays more than 20 seconds on the page. 
+This script is to used with [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en) to auto upvote question and the first answer if the user stays more than 10 seconds on the page. 
 
 The script also checks if you have landed on the page from http(s)://stackoverflow.com or from other internet sites to understand if you are answering questions on SO or browsing for answers. 
 
@@ -12,4 +12,4 @@ In any case, the user can revert his action within 60 seconds.
 
 1. Install [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
 2. Open Tampermonkey options -> Select Utilities
-3. Import so-auto-upvoter.js and so-isUserAnsweringQuestions.js
+3. Import so-auto-upvoter.js
