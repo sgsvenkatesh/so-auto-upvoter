@@ -77,7 +77,7 @@
         }, 100);
     }
 
-    if (/stackoverflow.com\/questions\/[0-9]+\/.*/.test(location.host + location.pathname)) {
+    else if (/stackoverflow.com\/questions\/[0-9]+\/.*/.test(location.host + location.pathname)) {
         console.log("[SO Auto Upvoter] Stack Overflow Question page identified");
         if (GM_getValue('isCommentClicked') === "true") {
             GM_deleteValue('isCommentClicked');
@@ -93,10 +93,12 @@
         }
     }
 
-    if (location.host + location.pathname === "stackoverflow.com/") {
-        console.log("[SO Auto Upvoter] Stack Overflow Homepage Identified");
+    else if (location.host + location.pathname === "stackoverflow.com/" || (
+        /stackoverflow.com\/(questions|unanswered).*/.test(location.host + location.pathname) && !(location.host + location.pathname).contains("/ask")
+    )) {
+        console.log("[SO Auto Upvoter] Stack Overflow Questions List Identified");
 
-        var questionsList = document.getElementById("question-mini-list");
+        var questionsList = document.getElementById("question-mini-list") || document.getElementById("questions");
         questionsList.querySelectorAll(".question-summary .cp").forEach(
             thisQuestionDetail =>
             thisQuestionDetail.setAttribute('onclick', `window.location.href='${thisQuestionDetail.getAttribute("onclick").slice(22, -1)}?isUserAnsweringQuestions=true`
@@ -108,7 +110,8 @@
         );
     }
 
-    if (location.host + location.pathname === "stackoverflow.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]") {
+    else if (location.host + location.pathname === "stackoverflow.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]") {
+        console.log("[SO Auto Upvoter] Stack Overflow Profile page identified");
         $js("a.answer-hyperlink, a.question-hyperlink").forEach(
             thisLinkEl => thisLinkEl.href = `${thisLinkEl.pathname}${thisLinkEl.search ? "&" : "?"}isUserAnsweringQuestions=true${thisLinkEl.hash}`
         );
