@@ -3,9 +3,9 @@
 // @namespace    http://stackoverflow.com/
 // @version      0.1
 // @description  Intelligent Auto Upvoter for Stack Overflow
-// @author       SGS Venkatesh
+// @author       You
 // @match        *://stackoverflow.com/*
-// @match        *://stackexchange.com/users/4749706/sgs-venkatesh?tab=inbox
+// @match        *://stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
@@ -62,7 +62,7 @@
         });
     }
 
-    if (location.host + location.pathname + location.search === "stackexchange.com/users/4749706/sgs-venkatesh?tab=inbox") {
+    if (location.host + location.pathname + location.search === "stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox") {
         console.log("[SO Auto Upvoter] Stack Exchange Profile page identified");
         $(".topbar-icon.icon-inbox").click();
         GM_setValue("isCommentClicked", "true");
@@ -100,7 +100,7 @@
         );
     }
 
-    if (location.host + location.pathname === "stackoverflow.com/users/3840037/sgs-venkatesh") {
+    if (location.host + location.pathname === "stackoverflow.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]") {
         document.querySelectorAll("a.answer-hyperlink, a.question-hyperlink").forEach(
             thisLinkEl => thisLinkEl.href = `${thisLinkEl.pathname}${thisLinkEl.search ? "&" : "?"}isUserAnsweringQuestions=true${thisLinkEl.hash}`
         );
