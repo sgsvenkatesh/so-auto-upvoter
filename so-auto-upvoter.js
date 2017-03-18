@@ -5,7 +5,7 @@
 // @description  Intelligent Auto Upvoter for Stack Overflow
 // @author       SGS Venkatesh
 // @match        *://stackoverflow.com/*
-// @match        *://stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox
+// @match        *://stackexchange.com/users/[SE_PROFILE_ID]/[SE_PROFILE_USERNAME]?tab=inbox
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
@@ -22,14 +22,17 @@
         // if there is atleast one answer
         if ($js("#answers") && $js("#answers .answer").length === 0) { return; }
 
-        // If the user stays more than 20 sec upvote question and answer
+        // If the user stays more than 10 sec, upvote question and answer
         setTimeout(() => {
             if ($js(".question .votecell") && $js(".question .votecell").length > 0) {
                 $js(".question .votecell")[0].querySelector("a.vote-up-off").click();
             }
 
             if ($js("#answers .answer") && $js("#answers .answer").length > 0) {
-                $js("#answers .answer")[0].querySelector(".votecell a.vote-up-off").click();
+                // To upvote all the answers
+                $js("#answers .answer").forEach(thisAnswer => thisAnswer.querySelector(".votecell a.vote-up-off").click() );
+                // To upvote only the first answer
+                // $js("#answers .answer")[0].querySelector(".votecell a.vote-up-off").click();
             }
         }, waitTime*1000);
     };
@@ -55,7 +58,7 @@
                     commentLinks.forEach(thisComment => {
                         thisComment.addEventListener('click', event => {
                             event.preventDefault();
-                            GM_setValue("isCommentClicked", "true");
+                            GM_setValue("isUserAnsweringQuestions", "true");
                             window.location.href = thisComment.href;
                         });
                     });
@@ -64,14 +67,14 @@
         });
     }
 
-    if (location.host + location.pathname + location.search === "stackexchange.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]?tab=inbox") {
+    if (location.host + location.pathname + location.search === "stackexchange.com/users/[SE_PROFILE_ID]/[SE_PROFILE_USERNAME]?tab=inbox") {
         console.log("[SO Auto Upvoter] Stack Exchange Profile page identified");
         $js(".topbar-icon.icon-inbox")[0].click();
         let commentSectionWaitingInterval = setInterval(() => {
             var commentLinks = $js('.inbox-dialog .modal-content .js-gps-track');
             if (commentLinks.length > 0) {
                 clearInterval(commentSectionWaitingInterval);
-                GM_setValue("isCommentClicked", "true");
+                GM_setValue("isUserAnsweringQuestions", "true");
                 window.location.href = commentLinks[0].href;
             }
         }, 100);
@@ -79,18 +82,24 @@
 
     else if (/stackoverflow.com\/questions\/[0-9]+\/.*/.test(location.host + location.pathname)) {
         console.log("[SO Auto Upvoter] Stack Overflow Question page identified");
-        if (GM_getValue('isCommentClicked') === "true") {
-            GM_deleteValue('isCommentClicked');
-            console.log('[SO Auto Upvoter] Exiting because user landed from notifications');
+        if (GM_getValue('isUserAnsweringQuestions') === "true") {
+            GM_deleteValue('isUserAnsweringQuestions');
+            console.log('[SO Auto Upvoter] Exiting because user is answering questions');
             return;
         }
 
         if (getParameterByName('isUserAnsweringQuestions') !== "true") {
             console.log(`[SO Auto Upvoter] Auto Upvoting in ${waitTime} seconds`);
             autoUpvote();
-        } else {
-            console.log("[SO Auto Upvoter] Exiting because user is answering questions");
         }
+
+        document.body.addEventListener('click', event => {
+            if (event.target.id !== "submit-button") { return; }
+
+            event.preventDefault();
+            GM_setValue("isUserAnsweringQuestions", "true");
+            document.getElementById("post-form").submit();
+        });
     }
 
     else if (location.host + location.pathname === "stackoverflow.com/" || (
