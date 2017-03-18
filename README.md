@@ -15,4 +15,4 @@ This can be used along with [Desktop Notifications for Stack Exchange](https://c
 1. Install [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
 2. Open Tampermonkey options -> Select Utilities
 3. Import so-auto-upvoter.js
-4. Replace [SO_PROFILE_ID] and [SO_PROFILE_USERNAME] with your profile ID and USERNAME (refer your profile page for URL structure)
+4. Replace [SE_PROFILE_ID], [SO_PROFILE_ID], [SE_PROFILE_USERNAME] and [SO_PROFILE_USERNAME] with your profile ID and USERNAME (refer your profile page for URL structure)
