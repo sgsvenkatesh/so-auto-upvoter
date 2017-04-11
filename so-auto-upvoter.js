@@ -5,7 +5,7 @@
 // @description  Intelligent Auto Upvoter for Stack Overflow
 // @author       SGS Venkatesh
 // @match        *://stackoverflow.com/*
-// @match        *://stackexchange.com/users/[SE_PROFILE_ID]/[SE_PROFILE_USERNAME]?tab=inbox
+// @match        *://stackexchange.com/users/4749706/sgs-venkatesh?tab=inbox
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
@@ -67,7 +67,7 @@
         });
     }
 
-    if (location.host + location.pathname + location.search === "stackexchange.com/users/[SE_PROFILE_ID]/[SE_PROFILE_USERNAME]?tab=inbox") {
+    if (location.host + location.pathname + location.search === "stackexchange.com/users/4749706/sgs-venkatesh?tab=inbox") {
         console.log("[SO Auto Upvoter] Stack Exchange Profile page identified");
         $js(".topbar-icon.icon-inbox")[0].click();
         let commentSectionWaitingInterval = setInterval(() => {
@@ -119,7 +119,7 @@
         );
     }
 
-    else if (location.host + location.pathname === "stackoverflow.com/users/[SO_PROFILE_ID]/[SO_PROFILE_USERNAME]") {
+    else if (location.host + location.pathname === "stackoverflow.com/users/3840037/sgs-venkatesh") {
         console.log("[SO Auto Upvoter] Stack Overflow Profile page identified");
         $js("a.answer-hyperlink, a.question-hyperlink").forEach(
             thisLinkEl => thisLinkEl.href = `${thisLinkEl.pathname}${thisLinkEl.search ? "&" : "?"}isUserAnsweringQuestions=true${thisLinkEl.hash}`
