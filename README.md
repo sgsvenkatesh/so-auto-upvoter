@@ -16,3 +16,6 @@ This can be used along with [Desktop Notifications for Stack Exchange](https://c
 2. Open Tampermonkey options -> Select Utilities
 3. Import so-auto-upvoter.js
 4. Replace [SE_PROFILE_ID], [SO_PROFILE_ID], [SE_PROFILE_USERNAME] and [SO_PROFILE_USERNAME] with your profile ID and USERNAME (refer your profile page for URL structure)
+
+TODO:
+1. Add namespaces for [SE_PROFILE_ID], [SO_PROFILE_ID], [SE_PROFILE_USERNAME] and [SO_PROFILE_USERNAME]
