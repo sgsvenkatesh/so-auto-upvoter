@@ -25,14 +25,14 @@
         // If the user stays more than 10 sec, upvote question and answer
         setTimeout(() => {
             if ($js(".question .votecell") && $js(".question .votecell").length > 0) {
-                $js(".question .votecell")[0].querySelector("a.vote-up-off").click();
+                $js(".question .votecell")[0].querySelector(".js-vote-up-btn").click();
             }
 
             if ($js("#answers .answer") && $js("#answers .answer").length > 0) {
                 // To upvote all the answers
-                $js("#answers .answer").forEach(thisAnswer => thisAnswer.querySelector(".votecell a.vote-up-off").click() );
+                $js("#answers .answer").forEach(thisAnswer => thisAnswer.querySelector(".votecell .js-vote-up-btn").click() );
                 // To upvote only the first answer
-                // $js("#answers .answer")[0].querySelector(".votecell a.vote-up-off").click();
+                //$js("#answers .answer")[0].querySelector(".votecell .js-vote-up-btn").click();
             }
         }, waitTime*1000);
     };
